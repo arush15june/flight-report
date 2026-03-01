@@ -1,0 +1,64 @@
+[
+  {
+    "name": "chinese_tpe_fuk_nonstop",
+    "description": "Chinese query: Taoyuan to Fukuoka nonstop, March to May",
+    "query": "查桃園到福岡的直飛便宜機票，三月到五月",
+    "expected": {
+      "origin": "TPE",
+      "destination": "FUK",
+      "start_date_contains": "2026-03",
+      "end_date_contains": "2026-05",
+      "nonstop": true,
+      "trip_type": "one-way",
+      "report_language": "zh-TW",
+      "should_contain": ["福岡", "桃園", "直飛", "TPE", "FUK"]
+    }
+  },
+  {
+    "name": "english_tpe_nrt_nonstop_april",
+    "description": "English query: TPE to NRT nonstop in April",
+    "query": "Find me cheap nonstop flights from TPE to NRT in April",
+    "expected": {
+      "origin": "TPE",
+      "destination": "NRT",
+      "start_date_contains": "2026-04",
+      "end_date_contains": "2026-04",
+      "nonstop": true,
+      "trip_type": "one-way",
+      "report_language": "zh-TW",
+      "should_contain": ["NRT", "TPE", "Nonstop"]
+    }
+  },
+  {
+    "name": "chinese_tpe_kix_roundtrip_june",
+    "description": "Chinese query: Taipei to Osaka round-trip in June",
+    "query": "台北到大阪來回機票，六月，幫我比價",
+    "expected": {
+      "origin": "TPE",
+      "destination": "KIX",
+      "start_date_contains": "2026-06",
+      "end_date_contains": "2026-06",
+      "nonstop": false,
+      "trip_type": "round-trip",
+      "report_language": "zh-TW",
+      "should_contain": ["大阪", "台北", "來回", "TPE", "KIX"]
+    }
+  },
+  {
+    "name": "chinese_tpe_fuk_flexible_roundtrip",
+    "description": "Chinese query: Taoyuan to Fukuoka flexible roundtrip, April, nonstop, arrive before noon, 4-5 days",
+    "query": "桃園到福岡 四月 直飛 中午前到 玩4~5天 便宜來回機票",
+    "expected": {
+      "origin": "TPE",
+      "destination": "FUK",
+      "start_date_contains": "2026-04",
+      "nonstop": true,
+      "trip_type": "flexible-roundtrip",
+      "min_days": 4,
+      "max_days": 5,
+      "arrival_before": "12:00",
+      "report_language": "zh-TW",
+      "should_contain": ["天", "夜", "請假", "行李", "總成本"]
+    }
+  }
+]
