@@ -161,6 +161,7 @@ Key formatting rules:
 - Use a Markdown table for the price comparison
 - Show TOP 10 cheapest flights (or combinations for flexible round-trip)
 - For flexible round-trip, include: 天（含頭含尾）/夜、請假天數、行李費、總成本
+- **請假天數算法**：去程當天一律算請假（除非出發時間在晚上 22:00 之後），回程當天不算請假。中間的平日全部算請假
 - Include "各天數最便宜" and "依請假天數推薦" sections for flexible round-trip
 - Include monthly price summaries (for one-way/fixed round-trip)
 - Add actionable booking advice

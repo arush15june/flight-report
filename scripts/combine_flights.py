@@ -66,21 +66,38 @@ def extract_flights_by_date(results_json):
     return flights_by_date
 
 
-def count_workdays(start_date, end_date):
-    """Count weekdays (Mon-Fri) between start and end dates, exclusive of both ends.
+def count_workdays(start_date, end_date, outbound_dep_time_minutes=None):
+    """Count workdays that need leave for a trip.
 
-    For a trip from departure_date to return_date, workdays = weekdays in between
-    (the days you actually need to take off work, assuming you travel on weekends
-    or use departure/return days as travel days).
+    Rules:
+    - Departure day: counts as a leave day if it's a weekday AND the outbound
+      flight departs before 22:00 (you can't work that day).
+    - Days in between (start_date+1 to end_date-1): all weekdays count.
+    - Return day: does NOT count (you arrive back and it's travel, not leave).
 
-    We count weekdays from start_date+1 to end_date-1 inclusive.
+    Args:
+        start_date: departure date
+        end_date: return date
+        outbound_dep_time_minutes: outbound departure time in minutes since midnight
+            (e.g. 720 = 12:00). If None or >= 1320 (22:00), departure day is not counted.
     """
     workdays = 0
+
+    # Departure day
+    if start_date.weekday() < 5:  # weekday
+        if outbound_dep_time_minutes is not None and outbound_dep_time_minutes < 22 * 60:
+            workdays += 1
+        elif outbound_dep_time_minutes is None:
+            # Default: assume departure day needs leave
+            workdays += 1
+
+    # Days in between (exclusive of both departure and return day)
     current = start_date + timedelta(days=1)
     while current < end_date:
         if current.weekday() < 5:  # Mon=0 .. Fri=4
             workdays += 1
         current += timedelta(days=1)
+
     return workdays
 
 
@@ -153,7 +170,8 @@ def main():
                     ticket_price = out_price + ret_price
                     total_price = ticket_price + args.baggage_cost
                     nights = days - 1
-                    workdays = count_workdays(out_date, ret_date)
+                    out_dep_minutes = parse_time(out_f.get("departure"))
+                    workdays = count_workdays(out_date, ret_date, out_dep_minutes)
 
                     combos.append({
                         "total_price": total_price,
