@@ -31,10 +31,13 @@ def parse_args():
 
 
 def parse_time(time_str):
-    """Parse a time string like '10:30 AM' or '14:00' into hours and minutes."""
+    """Parse a time string like '10:30 AM', '14:00', or '6:05 AM on Wed, Apr 1' into minutes since midnight."""
     if not time_str:
         return None
     time_str = time_str.strip()
+    # Strip trailing " on ..." suffix (e.g. "6:05 AM on Wed, Apr 1")
+    if " on " in time_str:
+        time_str = time_str.split(" on ")[0].strip()
     for fmt in ("%I:%M %p", "%I:%M%p", "%H:%M"):
         try:
             t = datetime.strptime(time_str, fmt)
