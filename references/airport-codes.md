@@ -25,6 +25,7 @@
 | 鹿兒島 | Kagoshima | KOJ |
 | 宮崎 | Miyazaki | KMI |
 | 長崎 | Nagasaki | NGS |
+| 神戶 | Kobe | UKB |
 | 小松 / 金澤 | Komatsu | KMQ |
 | 廣島 | Hiroshima | HIJ |
 | 松山(日本) | Matsuyama | MYJ |
