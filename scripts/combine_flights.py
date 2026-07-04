@@ -52,6 +52,28 @@ def is_flight_complete(flight):
     return bool(flight.get("airline")) and bool(flight.get("departure")) and bool(flight.get("arrival"))
 
 
+def get_price(flight):
+    """Return a numeric price from either legacy or v3 search output."""
+    price = flight.get("price_numeric")
+    if price is not None:
+        return price
+    price = flight.get("price")
+    if isinstance(price, (int, float)):
+        return price
+    return None
+
+
+def get_duration(flight):
+    """Return a duration string from either legacy or v3 search output."""
+    duration = flight.get("duration")
+    if duration:
+        return duration
+    mins = flight.get("duration_mins")
+    if isinstance(mins, int):
+        return f"{mins // 60}h {mins % 60}m"
+    return None
+
+
 def extract_flights_by_date(results_json):
     """Extract flights grouped by search_date from a search results JSON."""
     flights_by_date = {}
@@ -141,7 +163,7 @@ def main():
                 continue
 
             # Filter by price
-            out_price = out_f.get("price_numeric")
+            out_price = get_price(out_f)
             if out_price is None:
                 continue
 
@@ -166,7 +188,7 @@ def main():
                     if args.filter_complete and not is_flight_complete(ret_f):
                         continue
 
-                    ret_price = ret_f.get("price_numeric")
+                    ret_price = get_price(ret_f)
                     if ret_price is None:
                         continue
 
@@ -188,7 +210,7 @@ def main():
                             "airline": out_f.get("airline"),
                             "departure": out_f.get("departure"),
                             "arrival": out_f.get("arrival"),
-                            "duration": out_f.get("duration"),
+                            "duration": get_duration(out_f),
                             "price": out_price,
                         },
                         "return": {
@@ -196,7 +218,7 @@ def main():
                             "airline": ret_f.get("airline"),
                             "departure": ret_f.get("departure"),
                             "arrival": ret_f.get("arrival"),
-                            "duration": ret_f.get("duration"),
+                            "duration": get_duration(ret_f),
                             "price": ret_price,
                         },
                     })
