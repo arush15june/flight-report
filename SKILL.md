@@ -2,8 +2,7 @@
 name: flight-report
 description: >
   Search Google Flights and generate a structured price comparison report.
-  Triggers on: 便宜機票, 機票比價, 查機票, 航班搜尋, 直飛, 找機票, 機票報告,
-  cheap flights, flight search, nonstop flights, flight comparison, airfare,
+  Triggers on: cheap flights, flight search, nonstop flights, flight comparison, airfare,
   flight report, compare flights, best flights, flight deals
 user_invocable: true
 ---
@@ -78,7 +77,7 @@ Execute the search script using the Bash tool. Use `search_flights_v3.py` (the
 default for fast-flights >= 3.0.0) and run it with the uv venv python:
 
 ```bash
-SKILL_DIR=/home/fourcore/.hermes/profiles/sales/skills/productivity/flight-report
+SKILL_DIR=/path/to/flight-report
 /tmp/flights-venv/bin/python "$SKILL_DIR/scripts/search_flights_v3.py" \
   --origin {ORIGIN} \
   --destination {DEST} \
@@ -112,7 +111,7 @@ When the user specifies a flexible day range (trip_type = flexible-roundtrip), u
 3. **Run both searches concurrently** using parallel tool calls / background execution if needed. Use the same v3 script for both directions:
 
 ```bash
-SKILL_DIR=/home/fourcore/.hermes/profiles/sales/skills/productivity/flight-report
+SKILL_DIR=/path/to/flight-report
 # Outbound search
 /tmp/flights-venv/bin/python "$SKILL_DIR/scripts/search_flights_v3.py" \
   --origin {ORIGIN} --destination {DEST} \

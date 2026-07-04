@@ -66,8 +66,6 @@ Example user requests:
 ```text
 Find cheap nonstop flights from Delhi to Chennai on Monday morning and return at night
 Taipei to Fukuoka in April, nonstop, cheapest round-trip
-台北到大阪六月來回機票，幫我比價
-桃園到福岡直飛便宜機票，玩 4~5 天
 ```
 
 ### As standalone scripts
@@ -75,7 +73,7 @@ Taipei to Fukuoka in April, nonstop, cheapest round-trip
 #### Search flights
 
 ```bash
-SKILL_DIR=/home/fourcore/.hermes/profiles/sales/skills/productivity/flight-report
+SKILL_DIR=/path/to/flight-report
 /tmp/flights-venv/bin/python "$SKILL_DIR/scripts/search_flights_v3.py" \
   --origin TPE \
   --destination KIX \
@@ -92,7 +90,7 @@ SKILL_DIR=/home/fourcore/.hermes/profiles/sales/skills/productivity/flight-repor
 #### Combine outbound and return options
 
 ```bash
-SKILL_DIR=/home/fourcore/.hermes/profiles/sales/skills/productivity/flight-report
+SKILL_DIR=/path/to/flight-report
 /tmp/flights-venv/bin/python "$SKILL_DIR/scripts/combine_flights.py" \
   --outbound-json /tmp/outbound.json \
   --return-json /tmp/return.json \
